@@ -1,0 +1,82 @@
+<div class="tickets-wrapper">
+    <div class="current-page">
+      <div class="title">
+        Dashboard > All Ticket
+      </div>
+    </div>
+      <div class="header-area">
+        <div class="left-area" style="display: block;">
+            <div class="filterBy">
+              <select 
+                class="filter-dropdown"
+                name="filterby"
+                [(ngModel)]="filterBy"
+              >  
+                  <option hidden value="" disabled selected>filter by</option> 
+                  <option value="ticket">Ticket Name</option>
+                  <option value="reporter">Reporter</option>
+                  <option value="date">Create Date</option>
+                  <option value="status">Status</option>
+              </select>
+            </div> 
+            <div class="filterArea">              
+              <input class="filter-input" type="text" [(ngModel)]="filterValue" [ngModelOptions]="{standalone: true}"/>
+              <button class="filter-button" (click)="search()">Search</button>
+              <button class="filter-reset" (click)="reset()">Clear Filter</button>
+            </div>
+            
+        </div>
+        <div class="right-area">
+          <img class="logo" src="../../../../assets/logo_ticket.svg">
+          <div class="action" (click)="reset()">New Ticket</div>        
+        </div>
+      </div>
+  
+      <table class="table table-bordered table-striped">
+          <thead>
+            <th>Ticket ID</th>
+            <th>Ticket Name</th>
+            <th>Reporter</th>
+            <th>Create Date</th>
+            <th class="text-center">Status</th>
+            <th>Activity</th>
+            <th>Product Steam</th>
+            <th>Action</th>
+          </thead>  
+          <tbody>
+            <tr *ngIf="!dataTable.length">
+                <td colspan="8" class="text-center">
+                  data not available
+                </td>
+            </tr>
+            <tr *ngFor="let item of dataTable">
+              <td class="id">{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.reporter }}</td>
+              <td>{{ item.createDate }}</td>
+              <td class="text-center">
+                <span class="status" [ngClass]=
+                "
+                  {
+                    'success': item.status === 'success', 
+                    'warning': item.status === 'warning', 
+                    'danger': item.status === 'danger'
+                  }
+                "></span>
+              </td>
+              <td>
+                {{ item.activity }}                
+                <span class="status" [ngClass]=
+                "
+                  { 
+                    'danger info': item.status === 'danger'
+                  }
+                "><i *ngIf="item.status === 'danger'">i</i></span>
+              </td>
+              <td>{{ item.product }}</td>
+              <td></td>
+            </tr>
+          </tbody>  
+      </table>    
+  </div>
+
